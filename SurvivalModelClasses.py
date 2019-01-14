@@ -66,9 +66,8 @@ class Cohort:
             # simulate
             patient.simulate(n_time_steps)
             # record survival time
-            survival_time = patient.survivalTime
-            if not (survival_time is None):
-                self.survivalTimes.append(survival_time)
+            if not (patient.survivalTime is None):
+                self.survivalTimes.append(patient.survivalTime)
 
         # calculate mean survival time
         self.meanSurvivalTime = sum(self.survivalTimes)/len(self.survivalTimes)
