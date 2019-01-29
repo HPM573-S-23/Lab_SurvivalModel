@@ -1,7 +1,7 @@
 import SurvivalModelClasses as Cls
 
-MORTALITY_PROB = 0.1
-TIME_STEPS = 40
+MORTALITY_PROB = 0.1    # annual probability of death
+TIME_STEPS = 40         # years
 
 # create a cohort
 myCohort = Cls.Cohort(id=1, pop_size= 100, mortality_prob=MORTALITY_PROB)
