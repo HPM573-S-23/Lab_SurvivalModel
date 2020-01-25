@@ -15,13 +15,16 @@ class Patient:
         :param mortality_prob: probability of death during a time-step (must be in [0,1])
         """
         self.id = id
-        self.rng = np.random.RandomState(seed=id)  # random number generator for this patient
+        self.rng = None  # random number generator for this patient
         self.mortalityProb = mortality_prob
         self.healthState = HealthStat.ALIVE  # assuming all patients are alive at the beginning
         self.survivalTime = None   # won't be observed unless the patient dies
 
     def simulate(self, n_time_steps):
         """ simulate the patient over the specified simulation length """
+
+        # assign the patient's random number generator
+        self.rng = np.random.RandomState(seed=self.id)
 
         t = 0  # simulation current time
 
@@ -45,21 +48,26 @@ class Cohort:
         :param pop_size: population size of this cohort
         :param mortality_prob: probability of death for each patient in this cohort over a time-step (must be in [0,1])
         """
+
+        self.id = id
+        self.initialPopSize = pop_size  # initial population size
+        self.mortalityProb = mortality_prob
         self.patients = []      # list of patients
         self.survivalTimes = []  # list to store survival time of each patient
         self.meanSurvivalTime = None  # mean survival time
-
-        # populate the cohort
-        for i in range(pop_size):
-            # create a new patient (use id * pop_size + n as patient id)
-            patient = Patient(id=id * pop_size + i, mortality_prob=mortality_prob)
-            # add the patient to the cohort
-            self.patients.append(patient)
 
     def simulate(self, n_time_steps):
         """ simulate the cohort of patients over the specified number of time-steps
         :param n_time_steps: number of time steps to simulate the cohort
         """
+
+        # populate the cohort
+        for i in range(self.initialPopSize):
+            # create a new patient (use id * pop_size + n as patient id)
+            patient = Patient(id=self.id * self.initialPopSize + i, mortality_prob=self.mortalityProb)
+            # add the patient to the cohort
+            self.patients.append(patient)
+
         # simulate all patients
         for patient in self.patients:
             # simulate
