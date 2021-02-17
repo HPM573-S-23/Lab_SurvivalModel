@@ -49,7 +49,7 @@ class Cohort:
         """
 
         self.id = id
-        self.initialPopSize = pop_size  # initial population size
+        self.popSize = pop_size  # initial population size
         self.mortalityProb = mortality_prob
         self.patients = []      # list of patients
         self.survivalTimes = []  # list to store survival time of each patient
@@ -61,9 +61,9 @@ class Cohort:
         """
 
         # populate the cohort
-        for i in range(self.initialPopSize):
+        for i in range(self.popSize):
             # create a new patient (use id * pop_size + n as patient id)
-            patient = Patient(id=self.id * self.initialPopSize + i, mortality_prob=self.mortalityProb)
+            patient = Patient(id=self.id * self.popSize + i, mortality_prob=self.mortalityProb)
             # add the patient to the cohort
             self.patients.append(patient)
 
